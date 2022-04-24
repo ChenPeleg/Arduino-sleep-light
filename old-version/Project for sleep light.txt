@@ -1,0 +1,68 @@
+﻿/*
+    Arduino with PIR motion sensor
+    For complete project details, visit: http://RandomNerdTutorials.com/pirsensor
+    Modified by Rui Santos based on PIR sensor by Limor Fried
+*/
+
+
+int led = 13;                // the pin that the LED is atteched to
+int led2 = 8;
+int sensor = 2;              // the pin that the sensor is atteched to
+int state = LOW;             // by default, no motion detected
+int val = 0;                 // variable to store the sensor status (value)
+int lightSensor = 7;
+int timeOfDelay = 3500; // 10 seconds
+int light = 0;
+int ledPin = 9;  // for fading
+int sensorValue = 0;
+
+
+void setup() {
+  pinMode(led, OUTPUT);      // initalize LED as an output
+  pinMode(led2, OUTPUT);      // initalize LED as an output
+  pinMode(sensor, INPUT);    // initialize sensor as an input
+  pinMode(lightSensor, INPUT);    // initialize sensor as an input
+  //Serial.begin(9600);        // initialize serial
+}
+
+
+void loop() {
+  val = digitalRead(sensor);   // read sensor value
+  light = digitalRead(lightSensor); // readlight sensor
+  sensorValue = analogRead(A0);
+  //Serial.println(sensorValu e);
+  
+  
+  if (val == HIGH && sensorValue > 1005) {            // && light == HIGH
+    for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
+      // sets the value (range from 0 to 255):
+      analogWrite(ledPin, fadeValue);
+
+
+      delay(30);
+    }
+    delay (10000);
+    for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 10) {
+      // sets the value (range from 0 to 255):
+      analogWrite(ledPin, fadeValue);
+
+
+      delay(30);
+    }
+    analogWrite(ledPin, 0);
+  }
+
+
+
+
+  if (false) {
+    digitalWrite(led, HIGH);
+    delay (700);
+    digitalWrite(led, LOW);
+    delay (1000);
+  }
+
+
+
+
+}
